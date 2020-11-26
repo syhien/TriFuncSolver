@@ -37,7 +37,7 @@ int main()
 			for (int i = 0; i < problem_string.length(); i++)
 			{
 				char c = problem_string[i];
-				if (c == 's')//sin
+				if (c == 's' or c == 'S')//sin
 				{
 					c = problem_string[++i];
 					if (i == problem_string.length())
@@ -46,7 +46,7 @@ int main()
 						cout << "输入有误，或许想要输入的是sin？\n";
 						break;
 					}
-					if (c != 'i')
+					if (c != 'i' and c != 'I')
 					{
 						unknown_char = 1;
 						cout << "输入有误，或许想要输入的是sin？\n";
@@ -58,7 +58,7 @@ int main()
 						cout << "输入有误，或许想要输入的是sin？\n";
 						break;
 					}
-					if (c != 'n')
+					if (c != 'n' and c != 'N')
 					{
 						unknown_char = 1;
 						cout << "输入有误，或许想要输入的是sin？\n";
@@ -66,7 +66,7 @@ int main()
 					if (!unknown_char)
 						new_problem.problem.push_back({ 's',0 });
 				}
-				else if (c == 'c')//cos
+				else if (c == 'c' or c == 'C')//cos
 				{
 					c = problem_string[++i];
 					if (i == problem_string.length())
@@ -75,7 +75,7 @@ int main()
 						cout << "输入有误，或许想要输入的是cos？\n";
 						break;
 					}
-					if (c != 'o')
+					if (c != 'o' and c != 'O')
 					{
 						unknown_char = 1;
 						cout << "输入有误，或许想要输入的是cos？\n";
@@ -87,7 +87,7 @@ int main()
 						cout << "输入有误，或许想要输入的是cos？\n";
 						break;
 					}
-					if (c != 's')
+					if (c != 's' and c != 'S')
 					{
 						unknown_char = 1;
 						cout << "输入有误，或许想要输入的是cos？\n";
@@ -95,7 +95,7 @@ int main()
 					if (!unknown_char)
 						new_problem.problem.push_back({ 'c',0 });
 				}
-				else if (c == 't')//tan
+				else if (c == 't' or c == 'T')//tan
 				{
 					c = problem_string[++i];
 					if (i == problem_string.length())
@@ -104,7 +104,7 @@ int main()
 						cout << "输入有误，或许想要输入的是tan？\n";
 						break;
 					}
-					if (c != 'a')
+					if (c != 'a' and c != 'A')
 					{
 						unknown_char = 1;
 						cout << "输入有误，或许想要输入的是tan？\n";
@@ -116,7 +116,7 @@ int main()
 						cout << "输入有误，或许想要输入的是tan？\n";
 						break;
 					}
-					if (c != 'n')
+					if (c != 'n' and c != 'N')
 					{
 						unknown_char = 1;
 						cout << "输入有误，或许想要输入的是tan？\n";
@@ -124,7 +124,7 @@ int main()
 					if (!unknown_char)
 						new_problem.problem.push_back({ 't',0 });
 				}
-				else if (c == 'p')//pi
+				else if (c == 'p' or c == 'P')//pi
 				{
 					c = problem_string[++i];
 					if (i == problem_string.length())
@@ -133,7 +133,7 @@ int main()
 						cout << "输入有误，或许想要输入的是pi？\n";
 						break;
 					}
-					if (c != 'i')
+					if (c != 'i' and c != 'I')
 					{
 						unknown_char = 1;
 						cout << "输入有误，或许想要输入的是pi？\n";
@@ -182,7 +182,6 @@ int main()
 			//DEBUG
 			cout << new_problem << endl;
 		}
-
 	}
 	return 0;
 }
