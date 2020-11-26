@@ -8,6 +8,12 @@ struct Item
 	double n;
 };
 
+struct ErrorInfo
+{
+	int error_position;
+	int error_type;
+};
+
 struct Problem
 {
 	vector <Item> problem;
@@ -27,12 +33,7 @@ struct Problem
 		out << "=" << fixed << setprecision(8) << x.answer;
 		return out;
 	}
-};
-
-struct ErrorInfo
-{
-	int error_position;
-	int error_type;
+	vector <ErrorInfo> error;
 };
 
 bool CheckProblem(Problem problem);
