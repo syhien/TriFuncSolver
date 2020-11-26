@@ -16,6 +16,7 @@ struct ErrorInfo
 
 struct Problem
 {
+	string problem_string;
 	vector <Item> problem;
 	double answer;
 	friend ostream& operator<<(ostream& out, const Problem& x)

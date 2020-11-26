@@ -31,16 +31,15 @@ int main()
 			cout << ch;
 			Problem new_problem;
 			bool unknown_char = 0;
-			string problem_string;
-			cin >> problem_string;
-			problem_string = ch + problem_string;
-			for (int i = 0; i < problem_string.length(); i++)
+			cin >> new_problem.problem_string;
+			new_problem.problem_string = ch + new_problem.problem_string;
+			for (int i = 0; i < new_problem.problem_string.length(); i++)
 			{
-				char c = problem_string[i];
+				char c = new_problem.problem_string[i];
 				if (c == 's' or c == 'S')//sin
 				{
-					c = problem_string[++i];
-					if (i == problem_string.length())
+					c = new_problem.problem_string[++i];
+					if (i == new_problem.problem_string.length())
 					{
 						unknown_char = 1;
 						cout << "输入有误，或许想要输入的是sin？\n";
@@ -51,8 +50,8 @@ int main()
 						unknown_char = 1;
 						cout << "输入有误，或许想要输入的是sin？\n";
 					}
-					c = problem_string[++i];
-					if (i == problem_string.length())
+					c = new_problem.problem_string[++i];
+					if (i == new_problem.problem_string.length())
 					{
 						unknown_char = 1;
 						cout << "输入有误，或许想要输入的是sin？\n";
@@ -68,8 +67,8 @@ int main()
 				}
 				else if (c == 'c' or c == 'C')//cos
 				{
-					c = problem_string[++i];
-					if (i == problem_string.length())
+					c = new_problem.problem_string[++i];
+					if (i == new_problem.problem_string.length())
 					{
 						unknown_char = 1;
 						cout << "输入有误，或许想要输入的是cos？\n";
@@ -80,8 +79,8 @@ int main()
 						unknown_char = 1;
 						cout << "输入有误，或许想要输入的是cos？\n";
 					}
-					c = problem_string[++i];
-					if (i == problem_string.length())
+					c = new_problem.problem_string[++i];
+					if (i == new_problem.problem_string.length())
 					{
 						unknown_char = 1;
 						cout << "输入有误，或许想要输入的是cos？\n";
@@ -97,8 +96,8 @@ int main()
 				}
 				else if (c == 't' or c == 'T')//tan
 				{
-					c = problem_string[++i];
-					if (i == problem_string.length())
+					c = new_problem.problem_string[++i];
+					if (i == new_problem.problem_string.length())
 					{
 						unknown_char = 1;
 						cout << "输入有误，或许想要输入的是tan？\n";
@@ -109,8 +108,8 @@ int main()
 						unknown_char = 1;
 						cout << "输入有误，或许想要输入的是tan？\n";
 					}
-					c = problem_string[++i];
-					if (i == problem_string.length())
+					c = new_problem.problem_string[++i];
+					if (i == new_problem.problem_string.length())
 					{
 						unknown_char = 1;
 						cout << "输入有误，或许想要输入的是tan？\n";
@@ -126,8 +125,8 @@ int main()
 				}
 				else if (c == 'p' or c == 'P')//pi
 				{
-					c = problem_string[++i];
-					if (i == problem_string.length())
+					c = new_problem.problem_string[++i];
+					if (i == new_problem.problem_string.length())
 					{
 						unknown_char = 1;
 						cout << "输入有误，或许想要输入的是pi？\n";
@@ -146,21 +145,21 @@ int main()
 					double number = c - '0';
 					double decimal = 1.0;
 					bool found_point = 0;
-					while (i + 1 < problem_string.length() and (problem_string[i + 1] == '.' or isdigit(problem_string[i + 1])))
+					while (i + 1 < new_problem.problem_string.length() and (new_problem.problem_string[i + 1] == '.' or isdigit(new_problem.problem_string[i + 1])))
 					{
 						i++;
-						if (problem_string[i] == '.')
+						if (new_problem.problem_string[i] == '.')
 						{
 							found_point = 1;
 						}
 						else if (!found_point)
 						{
-							number = number * 10 + (problem_string[i] - '0');
+							number = number * 10 + (new_problem.problem_string[i] - '0');
 						}
 						else
 						{
 							decimal *= 0.1;
-							number += (problem_string[i] - '0') * decimal;
+							number += (new_problem.problem_string[i] - '0') * decimal;
 						}
 					}
 					new_problem.problem.push_back({ 'n',number });
