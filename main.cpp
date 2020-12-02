@@ -63,7 +63,7 @@ int main()
 						cout << "输入有误，或许想要输入的是sin？\n";
 					}
 					if (!unknown_char)
-						new_problem.problem.push_back({ 's',0 });
+						new_problem.problem.push_back({ 's',0,false,-1 });
 				}
 				else if (c == 'c' or c == 'C')//cos
 				{
@@ -92,7 +92,7 @@ int main()
 						cout << "输入有误，或许想要输入的是cos？\n";
 					}
 					if (!unknown_char)
-						new_problem.problem.push_back({ 'c',0 });
+						new_problem.problem.push_back({ 'c',0,false,-1 });
 				}
 				else if (c == 't' or c == 'T')//tan
 				{
@@ -121,7 +121,7 @@ int main()
 						cout << "输入有误，或许想要输入的是tan？\n";
 					}
 					if (!unknown_char)
-						new_problem.problem.push_back({ 't',0 });
+						new_problem.problem.push_back({ 't',0,false,-1 });
 				}
 				else if (c == 'p' or c == 'P')//pi
 				{
@@ -138,7 +138,7 @@ int main()
 						cout << "输入有误，或许想要输入的是pi？\n";
 					}
 					if (!unknown_char)
-						new_problem.problem.push_back({ 'n',3.1415926 });
+						new_problem.problem.push_back({ 'n',3.1415926,false,-1 });
 				}
 				else if (isdigit(c))
 				{
@@ -162,11 +162,11 @@ int main()
 							number += (new_problem.problem_string[i] - '0') * decimal;
 						}
 					}
-					new_problem.problem.push_back({ 'n',number });
+					new_problem.problem.push_back({ 'n',number,false,-1 });
 				}
 				else if (c == '+' or c == '-' or c == '*' or c == '/' or c == '(' or c == ')')
 				{
-					new_problem.problem.push_back({ c,0 });
+					new_problem.problem.push_back({ c,0,false,-1 });
 				}
 				else
 				{
@@ -177,6 +177,12 @@ int main()
 			{
 				cout << "不正确的输入，请重新输入表达式\n";
 				continue;
+			}
+			bool legel_problem = CheckProblem(new_problem);
+			if (!legel_problem)
+			{
+				cout << "表达式有误\n";
+				ProblemPrintWithError(new_problem);
 			}
 			//DEBUG
 			cout << new_problem << endl;

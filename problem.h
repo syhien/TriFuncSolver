@@ -1,16 +1,13 @@
 #pragma once
 #include <vector>
 #include <iomanip>
+#include <Windows.h>
 using namespace std;
 struct Item
 {
 	char c;
 	double n;
-};
-
-struct ErrorInfo
-{
-	int error_position;
+	bool error;
 	int error_type;
 };
 
@@ -34,10 +31,10 @@ struct Problem
 		out << "=" << fixed << setprecision(8) << x.answer;
 		return out;
 	}
-	vector <ErrorInfo> error;
+	bool error;
 };
 
-bool CheckProblem(Problem problem);
-ErrorInfo FindError(Problem problem);
+bool CheckProblem(Problem& problem);
 double SolveProblem(Problem problem);
 void ViewProblem(Problem problem);
+void ProblemPrintWithError(Problem problem);
