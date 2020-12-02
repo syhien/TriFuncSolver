@@ -3,6 +3,13 @@
 #include <cmath>
 using namespace std;
 
+inline bool isoperater(char c)
+{
+	if (c == '+' or c == '-' or c == '*' or c == '/')
+		return 1;
+	return 0;
+}
+
 bool CheckProblem(Problem& problem)
 {
 	bool error_exist = 0;
@@ -28,7 +35,8 @@ bool CheckProblem(Problem& problem)
 		problem.problem[problem.problem.size() - 1].error = 1, problem.problem[problem.problem.size() - 1].error_type = 2;
 		error_exist = 1;
 	}
-
+	//3：操作符后不能是右括号和操作符
+	
 	return !error_exist;
 }
 
