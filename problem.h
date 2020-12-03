@@ -19,14 +19,26 @@ struct Problem
 	friend ostream& operator<<(ostream& out, const Problem& x)
 	{
 		for (auto& i : x.problem)
-			if (i.c != 'n')
-				out << i.c;
-			else
+			switch (i.c)
 			{
+			case 'n':
 				if (i.n == 3.1415926)
 					out << "pi";
 				else
 					out << i.n;
+				break;
+			case 's':
+				out << "sin";
+				break;
+			case 'c':
+				out << "cos";
+				break;
+			case 't':
+				out << "tan";
+				break;
+			default:
+				out << i.c;
+				break;
 			}
 		out << "=" << fixed << setprecision(8) << x.answer;
 		return out;
