@@ -12,6 +12,28 @@ inline bool isoperater(char c)
 
 bool CheckProblem(Problem& problem)
 {
+	bool problem_read_finish = 0;
+	while (!problem_read_finish)
+	{
+		for (auto i = problem.problem.begin(); i != problem.problem.end(); i++)
+		{
+			if (i + 1 == problem.problem.end())
+				problem_read_finish = 1;
+			if (i->c == '-')
+			{
+				if (i - 1 >= problem.problem.begin() and i + 1 != problem.problem.end())
+				{
+					if (((i - 1)->c == '(' or (i - 1)->c == 's' or (i - 1)->c == 'c' or (i - 1)->c == 't') and (i + 1)->c == 'n')
+					{
+						i++;
+						i->n *= -1;
+						problem.problem.erase(i - 1);
+						break;
+					}
+				}
+			}
+		}
+	}
 	bool error_exist = 0;
 	//1：表达式开头
 	auto problem_begin = problem.problem.begin();
