@@ -65,6 +65,21 @@ bool CheckProblem(Problem& problem)
 			}
 		}
 	}
+	//5：三角函数后不能是右括号
+	for (auto i = problem.problem.begin(); i != problem.problem.end(); i++)
+	{
+		if (i->c == 's' or i->c == 'c' or i->c == 't')
+		{
+			if (i + 1 != problem.problem.end())
+			{
+				if ((i + 1)->c == ')')
+				{
+					i->error = 1, i->error_type = 5;
+					error_exist = 1;
+				}
+			}
+		}
+	}
 	return !error_exist;
 }
 
@@ -84,7 +99,11 @@ inline void PrintErrorInfo(int error_type)
 	case 4:
 		cout << "操作符后不能接操作符\n";
 		break;
+	case 5:
+		cout << "三角函数后不能是右括号\n";
+		break;
 	default:
+		cout << "不是合法的输入\n";
 		break;
 	}
 }
