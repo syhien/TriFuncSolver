@@ -12,6 +12,7 @@ inline bool isoperater(char c)
 
 bool CheckProblem(Problem& problem)
 {
+	//预处理操作数的负号
 	bool problem_read_finish = 0;
 	while (!problem_read_finish)
 	{
@@ -34,6 +35,11 @@ bool CheckProblem(Problem& problem)
 			}
 		}
 	}
+	//删除表达式开头的多余空格
+	while (problem.problem[0].c == ' ')
+		problem.problem.erase(problem.problem.begin());
+	while (problem.problem[problem.problem.size() - 1].c == ' ')
+		problem.problem.pop_back();
 	bool error_exist = 0;
 	//1：表达式开头
 	auto problem_begin = problem.problem.begin();
@@ -102,6 +108,35 @@ bool CheckProblem(Problem& problem)
 			}
 		}
 	}
+	//6：数字中出现空格
+	problem_read_finish = 0;
+	while (!problem_read_finish)
+	{
+		for (auto i = problem.problem.begin(); i != problem.problem.end(); i++)
+		{
+			if (i + 1 == problem.problem.end())
+			{
+				problem_read_finish = 1;
+			}
+			if (i->c == ' ')
+			{
+				if (i - 1 >= problem.problem.begin() and i + 1 != problem.problem.end())
+				{
+					if ((i - 1)->c == 'n' and (i + 1)->c == 'n')
+					{
+						(i - 1)->error = (i + 1)->error = 1;
+						(i - 1)->error_type = (i + 1)->error_type = 6;
+						error_exist = 1;
+					}
+					else
+					{
+						problem.problem.erase(i);
+						break;
+					}
+				}
+			}
+		}
+	}
 	return !error_exist;
 }
 
@@ -123,6 +158,9 @@ inline void PrintErrorInfo(int error_type)
 		break;
 	case 5:
 		cout << "三角函数后不能是右括号\n";
+		break;
+	case 6:
+		cout << "有空格的运算数是非法的\n";
 		break;
 	default:
 		cout << "不是合法的输入\n";
