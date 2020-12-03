@@ -3,7 +3,10 @@
 #include <conio.h>
 #include <ctype.h>
 #include <cstdlib>
+#include <cstdio>
+#include <cstring>
 #include "problem.h"
+#include <string>
 using namespace std;
 
 int main()
@@ -31,7 +34,7 @@ int main()
 			cout << ch;
 			Problem new_problem;
 			bool unknown_char = 0;
-			cin >> new_problem.problem_string;
+			getline(cin, new_problem.problem_string);
 			new_problem.problem_string = ch + new_problem.problem_string;
 			for (int i = 0; i < new_problem.problem_string.length(); i++)
 			{
@@ -164,7 +167,7 @@ int main()
 					}
 					new_problem.problem.push_back({ 'n',number,false,-1 });
 				}
-				else if (c == '+' or c == '-' or c == '*' or c == '/' or c == '(' or c == ')')
+				else if (c == '+' or c == '-' or c == '*' or c == '/' or c == '(' or c == ')' or c == ' ')
 				{
 					new_problem.problem.push_back({ c,0,false,-1 });
 				}
