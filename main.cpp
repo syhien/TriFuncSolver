@@ -147,15 +147,15 @@ int main()
 				{
 					double number = c - '0';
 					double decimal = 1.0;
-					bool found_point = 0;
+					int count_point = 0;
 					while (i + 1 < new_problem.problem_string.length() and (new_problem.problem_string[i + 1] == '.' or isdigit(new_problem.problem_string[i + 1])))
 					{
 						i++;
 						if (new_problem.problem_string[i] == '.')
 						{
-							found_point = 1;
+							count_point++;
 						}
-						else if (!found_point)
+						else if (!count_point)
 						{
 							number = number * 10 + (new_problem.problem_string[i] - '0');
 						}
@@ -166,6 +166,11 @@ int main()
 						}
 					}
 					new_problem.problem.push_back({ 'n',number,false,-1 });
+					if (count_point > 1)
+					{
+						unknown_char = 1;
+						cout << "输入了过多的小数点\n";
+					}
 				}
 				else if (c == '+' or c == '-' or c == '*' or c == '/' or c == '(' or c == ')' or c == ' ')
 				{
