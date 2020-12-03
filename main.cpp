@@ -184,8 +184,8 @@ int main()
 				cout << "表达式有误\n";
 				ProblemPrintWithError(new_problem);
 			}
-			//DEBUG
-			cout << new_problem << endl;
+			else
+				cout << new_problem << endl;
 		}
 	}
 	return 0;

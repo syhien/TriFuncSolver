@@ -35,8 +35,36 @@ bool CheckProblem(Problem& problem)
 		problem.problem[problem.problem.size() - 1].error = 1, problem.problem[problem.problem.size() - 1].error_type = 2;
 		error_exist = 1;
 	}
-	//3：操作符后不能是右括号和操作符
-	
+	//3：操作符后不能是右括号
+	for (auto i = problem.problem.begin(); i != problem.problem.end(); i++)
+	{
+		if (isoperater(i->c))
+		{
+			if (i + 1 != problem.problem.end())
+			{
+				if ((i + 1)->c == ')')
+				{
+					i->error = 1, i->error_type = 3;
+					error_exist = 1;
+				}
+			}
+		}
+	}
+	//4：操作符后不能是操作符
+	for (auto i = problem.problem.begin(); i != problem.problem.end(); i++)
+	{
+		if (isoperater(i->c))
+		{
+			if (i + 1 != problem.problem.end())
+			{
+				if (isoperater((i + 1)->c))
+				{
+					i->error = 1, i->error_type = 4;
+					error_exist = 1;
+				}
+			}
+		}
+	}
 	return !error_exist;
 }
 
@@ -49,6 +77,12 @@ inline void PrintErrorInfo(int error_type)
 		break;
 	case 2:
 		cout << "表达式结尾非法\n";
+		break;
+	case 3:
+		cout << "操作符后不能接右括号\n";
+		break;
+	case 4:
+		cout << "操作符后不能接操作符\n";
 		break;
 	default:
 		break;
