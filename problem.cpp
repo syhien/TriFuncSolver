@@ -144,6 +144,30 @@ bool CheckProblem(Problem& problem)
 			}
 		}
 	}
+	//7：数字后不能是左括号
+	for (auto i = problem.problem.begin(); i != problem.problem.end(); i++)
+	{
+		if (i->c == 'n')
+		{
+			if ((i + 1) != problem.problem.end() and (i + 1)->c == '(')
+			{
+				i->error = 1, i->error_type = 7;
+				error_exist = 1;
+			}
+		}
+	}
+	//8：数字后不能是三角函数
+	for (auto i = problem.problem.begin(); i != problem.problem.end(); i++)
+	{
+		if (i->c == 'n')
+		{
+			if ((i + 1) != problem.problem.end() and ((i + 1)->c == 's' or (i + 1)->c == 'c' or (i + 1)->c == 't'))
+			{
+				i->error = 1, i->error_type = 8;
+				error_exist = 1;
+			}
+		}
+	}
 	return !error_exist;
 }
 
@@ -168,6 +192,12 @@ inline void PrintErrorInfo(int error_type)
 		break;
 	case 6:
 		cout << "有空格的运算数是非法的\n";
+		break;
+	case 7:
+		cout << "操作数后不能是左括号\n";
+		break;
+	case 8:
+		cout << "操作数后不能是三角函数\n";
 		break;
 	default:
 		cout << "不是合法的输入\n";
