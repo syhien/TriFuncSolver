@@ -199,8 +199,9 @@ int main()
 			ProblemPrintWithError(new_problem);
 		}
 		else
+		{
 			cout << new_problem << endl;
-
+		}
 	}
 	return 0;
 }

@@ -41,6 +41,7 @@ struct Problem
 				break;
 			}
 		out << "=" << fixed << setprecision(8) << x.answer;
+		out << defaultfloat;
 		return out;
 	}
 	bool error;
