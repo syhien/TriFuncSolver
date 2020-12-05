@@ -17,12 +17,56 @@ int main()
 	vector <Problem> problem;
 	while (!exit)
 	{
-		cout << "\n请输入表达式进行计算（空格或回车结束表达式输入）或按上、下方向键查看计算记录\n按ESC退出程序\n";
+		cout << "\n请输入表达式进行计算（空格或回车结束表达式输入）或按上、下方向键进入查看计算记录界面\n按ESC退出程序\n";
 		fflush(stdin);
 		char ch = _getch();
-		if (ch == 38 or ch == 40)//38up 40down
+		if (ch == -32)//72up 80down
 		{
-			
+			cout << "按键查看成功计算的表达式，按上、下方向键切换，按ESC退出查看\n";
+			if (problem.size() == 0)
+			{
+				cout << "没有成功计算的表达式\n";
+				ch = _getch();
+				continue;
+			}
+			bool exit_view = 0;
+			int viewing;
+			ch = _getch();
+			if (ch == 72)
+				viewing = problem.size() - 1;
+			else if (ch == 80)
+				viewing = 0;
+			else
+				continue;
+			while (!exit_view)
+			{
+				cout << problem[viewing] << endl;
+				ch = _getch();
+				if (ch == 27)
+				{
+					exit_view = 1;
+					cout << "退出查看表达式\n";
+					continue;
+				}
+				else if (ch == -32)
+				{
+					ch = _getch();
+					if (ch == 72)
+					{
+						viewing--;
+						while (viewing < 0)
+							viewing += problem.size();
+					}
+					else if (ch == 80)
+					{
+						viewing++;
+						viewing %= problem.size();
+					}
+					else
+						continue;
+				}
+			}
+			continue;
 		}
 		else if (ch == 27)//esc
 		{
@@ -210,6 +254,8 @@ int main()
 			cout << new_problem << endl;
 			problem.push_back(new_problem);
 		}
+		while (problem.size() > 5)
+			problem.erase(problem.begin());
 	}
 	return 0;
 }
