@@ -20,6 +20,22 @@ void CheckProblem(Problem& problem)
 		problem.problem.erase(problem.problem.begin());
 	while (problem.problem[problem.problem.size() - 1].c == ' ')
 		problem.problem.pop_back();
+	//15:数字被空格隔断
+	for (auto i = problem.problem.begin() + 1; i <= problem.problem.end() - 1; i++)
+	{
+		if (i->c == ' ')
+		{
+			auto j = i + 1;
+			while (j != problem.problem.end() and j->c == ' ')
+				j++;
+			if ((i - 1)->c == 'n' and j->c == 'n')
+			{
+				(i - 1)->error = 1, (i - 1)->error_type = 15;
+				j->error = 1, j->error_type = 15;
+				problem.error = 1;
+			}
+		}
+	}
 	bool problem_read_finish = 0;
 	//删除表达式中间的多余空格
 	while (!problem_read_finish)
@@ -320,6 +336,9 @@ inline void PrintErrorInfo(int error_type)
 		break;
 	case 14:
 		cout << "左右括号不匹配\n";
+		break;
+	case 15:
+		cout << "数字中有空格\n";
 		break;
 	default:
 		cout << "不是合法的输入\n";
