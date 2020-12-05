@@ -192,6 +192,42 @@ bool CheckProblem(Problem& problem)
 			}
 		}
 	}
+	//11：右括号后不能是左括号
+	for (auto i = problem.problem.begin(); i != problem.problem.end(); i++)
+	{
+		if (i->c == ')')
+		{
+			if ((i + 1) != problem.problem.end() and (i + 1)->c == '(')
+			{
+				i->error = 1, i->error_type = 11;
+				error_exist = 1;
+			}
+		}
+	}
+	//12：右括号后不能是运算数
+	for (auto i = problem.problem.begin(); i != problem.problem.end(); i++)
+	{
+		if (i->c == ')')
+		{
+			if ((i + 1) != problem.problem.end() and (i + 1)->c == 'n')
+			{
+				i->error = 1, i->error_type = 12;
+				error_exist = 1;
+			}
+		}
+	}
+	//13：右括号后不能是三角函数
+	for (auto i = problem.problem.begin(); i != problem.problem.end(); i++)
+	{
+		if (i->c == ')')
+		{
+			if ((i + 1) != problem.problem.end() and ((i + 1)->c == 's' or (i + 1)->c == 'c' or (i + 1)->c == 't'))
+			{
+				i->error = 1, i->error_type = 13;
+				error_exist = 1;
+			}
+		}
+	}
 	return !error_exist;
 }
 
@@ -228,6 +264,15 @@ inline void PrintErrorInfo(int error_type)
 		break;
 	case 10:
 		cout << "左括号后不能是运算符\n";
+		break;
+	case 11:
+		cout << "右括号后不能是左括号\n";
+		break;
+	case 12:
+		cout << "右括号后不能是运算数\n";
+		break;
+	case 13:
+		cout << "右括号后不能是三角函数\n";
 		break;
 	default:
 		cout << "不是合法的输入\n";
