@@ -21,7 +21,7 @@ int main()
 		char ch = _getch();
 		if (ch == 38 or ch == 40)//38up 40down
 		{
-
+			
 		}
 		else if (ch == 27)//esc
 		{
@@ -29,172 +29,178 @@ int main()
 			cout << "退出程序\n";
 			continue;
 		}
-		else//input
+		else if (ch == 16)//shift
 		{
-			cout << ch;
-			Problem new_problem;
-			bool unknown_char = 0;
-			getline(cin, new_problem.problem_string);
-			new_problem.problem_string = ch + new_problem.problem_string;
-			for (int i = 0; i < new_problem.problem_string.length(); i++)
+			ch = _getch();
+			if (ch == 57)//(
+				ch = '(';
+			else if (ch == 48)//)
+				ch = ')';
+		}
+		cout << ch;
+		Problem new_problem;
+		bool unknown_char = 0;
+		getline(cin, new_problem.problem_string);
+		new_problem.problem_string = ch + new_problem.problem_string;
+		for (int i = 0; i < new_problem.problem_string.length(); i++)
+		{
+			char c = new_problem.problem_string[i];
+			if (c == 's' or c == 'S')//sin
 			{
-				char c = new_problem.problem_string[i];
-				if (c == 's' or c == 'S')//sin
-				{
-					c = new_problem.problem_string[++i];
-					if (i == new_problem.problem_string.length())
-					{
-						unknown_char = 1;
-						cout << "输入有误，或许想要输入的是sin？\n";
-						break;
-					}
-					if (c != 'i' and c != 'I')
-					{
-						unknown_char = 1;
-						cout << "输入有误，或许想要输入的是sin？\n";
-					}
-					c = new_problem.problem_string[++i];
-					if (i == new_problem.problem_string.length())
-					{
-						unknown_char = 1;
-						cout << "输入有误，或许想要输入的是sin？\n";
-						break;
-					}
-					if (c != 'n' and c != 'N')
-					{
-						unknown_char = 1;
-						cout << "输入有误，或许想要输入的是sin？\n";
-					}
-					if (!unknown_char)
-						new_problem.problem.push_back({ 's',0,false,-1 });
-				}
-				else if (c == 'c' or c == 'C')//cos
-				{
-					c = new_problem.problem_string[++i];
-					if (i == new_problem.problem_string.length())
-					{
-						unknown_char = 1;
-						cout << "输入有误，或许想要输入的是cos？\n";
-						break;
-					}
-					if (c != 'o' and c != 'O')
-					{
-						unknown_char = 1;
-						cout << "输入有误，或许想要输入的是cos？\n";
-					}
-					c = new_problem.problem_string[++i];
-					if (i == new_problem.problem_string.length())
-					{
-						unknown_char = 1;
-						cout << "输入有误，或许想要输入的是cos？\n";
-						break;
-					}
-					if (c != 's' and c != 'S')
-					{
-						unknown_char = 1;
-						cout << "输入有误，或许想要输入的是cos？\n";
-					}
-					if (!unknown_char)
-						new_problem.problem.push_back({ 'c',0,false,-1 });
-				}
-				else if (c == 't' or c == 'T')//tan
-				{
-					c = new_problem.problem_string[++i];
-					if (i == new_problem.problem_string.length())
-					{
-						unknown_char = 1;
-						cout << "输入有误，或许想要输入的是tan？\n";
-						break;
-					}
-					if (c != 'a' and c != 'A')
-					{
-						unknown_char = 1;
-						cout << "输入有误，或许想要输入的是tan？\n";
-					}
-					c = new_problem.problem_string[++i];
-					if (i == new_problem.problem_string.length())
-					{
-						unknown_char = 1;
-						cout << "输入有误，或许想要输入的是tan？\n";
-						break;
-					}
-					if (c != 'n' and c != 'N')
-					{
-						unknown_char = 1;
-						cout << "输入有误，或许想要输入的是tan？\n";
-					}
-					if (!unknown_char)
-						new_problem.problem.push_back({ 't',0,false,-1 });
-				}
-				else if (c == 'p' or c == 'P')//pi
-				{
-					c = new_problem.problem_string[++i];
-					if (i == new_problem.problem_string.length())
-					{
-						unknown_char = 1;
-						cout << "输入有误，或许想要输入的是pi？\n";
-						break;
-					}
-					if (c != 'i' and c != 'I')
-					{
-						unknown_char = 1;
-						cout << "输入有误，或许想要输入的是pi？\n";
-					}
-					if (!unknown_char)
-						new_problem.problem.push_back({ 'n',3.1415926,false,-1 });
-				}
-				else if (isdigit(c))
-				{
-					double number = c - '0';
-					double decimal = 1.0;
-					int count_point = 0;
-					while (i + 1 < new_problem.problem_string.length() and (new_problem.problem_string[i + 1] == '.' or isdigit(new_problem.problem_string[i + 1])))
-					{
-						i++;
-						if (new_problem.problem_string[i] == '.')
-						{
-							count_point++;
-						}
-						else if (!count_point)
-						{
-							number = number * 10 + (new_problem.problem_string[i] - '0');
-						}
-						else
-						{
-							decimal *= 0.1;
-							number += (new_problem.problem_string[i] - '0') * decimal;
-						}
-					}
-					new_problem.problem.push_back({ 'n',number,false,-1 });
-					if (count_point > 1)
-					{
-						unknown_char = 1;
-						cout << "输入了过多的小数点\n";
-					}
-				}
-				else if (c == '+' or c == '-' or c == '*' or c == '/' or c == '(' or c == ')' or c == ' ')
-				{
-					new_problem.problem.push_back({ c,0,false,-1 });
-				}
-				else
+				c = new_problem.problem_string[++i];
+				if (i == new_problem.problem_string.length())
 				{
 					unknown_char = 1;
+					cout << "输入有误，或许想要输入的是sin？\n";
+					break;
+				}
+				if (c != 'i' and c != 'I')
+				{
+					unknown_char = 1;
+					cout << "输入有误，或许想要输入的是sin？\n";
+				}
+				c = new_problem.problem_string[++i];
+				if (i == new_problem.problem_string.length())
+				{
+					unknown_char = 1;
+					cout << "输入有误，或许想要输入的是sin？\n";
+					break;
+				}
+				if (c != 'n' and c != 'N')
+				{
+					unknown_char = 1;
+					cout << "输入有误，或许想要输入的是sin？\n";
+				}
+				if (!unknown_char)
+					new_problem.problem.push_back({ 's',0,false,-1 });
+			}
+			else if (c == 'c' or c == 'C')//cos
+			{
+				c = new_problem.problem_string[++i];
+				if (i == new_problem.problem_string.length())
+				{
+					unknown_char = 1;
+					cout << "输入有误，或许想要输入的是cos？\n";
+					break;
+				}
+				if (c != 'o' and c != 'O')
+				{
+					unknown_char = 1;
+					cout << "输入有误，或许想要输入的是cos？\n";
+				}
+				c = new_problem.problem_string[++i];
+				if (i == new_problem.problem_string.length())
+				{
+					unknown_char = 1;
+					cout << "输入有误，或许想要输入的是cos？\n";
+					break;
+				}
+				if (c != 's' and c != 'S')
+				{
+					unknown_char = 1;
+					cout << "输入有误，或许想要输入的是cos？\n";
+				}
+				if (!unknown_char)
+					new_problem.problem.push_back({ 'c',0,false,-1 });
+			}
+			else if (c == 't' or c == 'T')//tan
+			{
+				c = new_problem.problem_string[++i];
+				if (i == new_problem.problem_string.length())
+				{
+					unknown_char = 1;
+					cout << "输入有误，或许想要输入的是tan？\n";
+					break;
+				}
+				if (c != 'a' and c != 'A')
+				{
+					unknown_char = 1;
+					cout << "输入有误，或许想要输入的是tan？\n";
+				}
+				c = new_problem.problem_string[++i];
+				if (i == new_problem.problem_string.length())
+				{
+					unknown_char = 1;
+					cout << "输入有误，或许想要输入的是tan？\n";
+					break;
+				}
+				if (c != 'n' and c != 'N')
+				{
+					unknown_char = 1;
+					cout << "输入有误，或许想要输入的是tan？\n";
+				}
+				if (!unknown_char)
+					new_problem.problem.push_back({ 't',0,false,-1 });
+			}
+			else if (c == 'p' or c == 'P')//pi
+			{
+				c = new_problem.problem_string[++i];
+				if (i == new_problem.problem_string.length())
+				{
+					unknown_char = 1;
+					cout << "输入有误，或许想要输入的是pi？\n";
+					break;
+				}
+				if (c != 'i' and c != 'I')
+				{
+					unknown_char = 1;
+					cout << "输入有误，或许想要输入的是pi？\n";
+				}
+				if (!unknown_char)
+					new_problem.problem.push_back({ 'n',3.1415926,false,-1 });
+			}
+			else if (isdigit(c))
+			{
+				double number = c - '0';
+				double decimal = 1.0;
+				int count_point = 0;
+				while (i + 1 < new_problem.problem_string.length() and (new_problem.problem_string[i + 1] == '.' or isdigit(new_problem.problem_string[i + 1])))
+				{
+					i++;
+					if (new_problem.problem_string[i] == '.')
+					{
+						count_point++;
+					}
+					else if (!count_point)
+					{
+						number = number * 10 + (new_problem.problem_string[i] - '0');
+					}
+					else
+					{
+						decimal *= 0.1;
+						number += (new_problem.problem_string[i] - '0') * decimal;
+					}
+				}
+				new_problem.problem.push_back({ 'n',number,false,-1 });
+				if (count_point > 1)
+				{
+					unknown_char = 1;
+					cout << "输入了过多的小数点\n";
 				}
 			}
-			if (unknown_char)
+			else if (c == '+' or c == '-' or c == '*' or c == '/' or c == '(' or c == ')' or c == ' ')
 			{
-				cout << "不正确的输入，请重新输入表达式\n";
-				continue;
-			}
-			bool legel_problem = CheckProblem(new_problem);
-			if (!legel_problem)
-			{
-				cout << "表达式有误\n";
-				ProblemPrintWithError(new_problem);
+				new_problem.problem.push_back({ c,0,false,-1 });
 			}
 			else
-				cout << new_problem << endl;
+			{
+				unknown_char = 1;
+			}
 		}
+		if (unknown_char)
+		{
+			cout << "不正确的输入，请重新输入表达式\n";
+			continue;
+		}
+		bool legel_problem = CheckProblem(new_problem);
+		if (!legel_problem)
+		{
+			cout << "表达式有误\n";
+			ProblemPrintWithError(new_problem);
+		}
+		else
+			cout << new_problem << endl;
+
 	}
 	return 0;
 }
