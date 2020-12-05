@@ -168,6 +168,30 @@ bool CheckProblem(Problem& problem)
 			}
 		}
 	}
+	//9：左括号后不能是右括号
+	for (auto i = problem.problem.begin(); i != problem.problem.end(); i++)
+	{
+		if (i->c == '(')
+		{
+			if ((i + 1) != problem.problem.end() and (i + 1)->c == ')')
+			{
+				i->error = 1, i->error_type = 9;
+				error_exist = 1;
+			}
+		}
+	}
+	//10：左括号后不能是运算符
+	for (auto i = problem.problem.begin(); i != problem.problem.end(); i++)
+	{
+		if (i->c == '(')
+		{
+			if ((i + 1) != problem.problem.end() and isoperater((i + 1)->c))
+			{
+				i->error = 1, i->error_type = 10;
+				error_exist = 1;
+			}
+		}
+	}
 	return !error_exist;
 }
 
@@ -182,10 +206,10 @@ inline void PrintErrorInfo(int error_type)
 		cout << "表达式结尾非法\n";
 		break;
 	case 3:
-		cout << "操作符后不能接右括号\n";
+		cout << "运算符后不能接右括号\n";
 		break;
 	case 4:
-		cout << "操作符后不能接操作符\n";
+		cout << "运算符后不能是运算符\n";
 		break;
 	case 5:
 		cout << "三角函数后不能是右括号\n";
@@ -198,6 +222,12 @@ inline void PrintErrorInfo(int error_type)
 		break;
 	case 8:
 		cout << "操作数后不能是三角函数\n";
+		break;
+	case 9:
+		cout << "括号内的内容不能为空\n";
+		break;
+	case 10:
+		cout << "左括号后不能是运算符\n";
 		break;
 	default:
 		cout << "不是合法的输入\n";
