@@ -22,9 +22,16 @@ bool CheckProblem(Problem& problem)
 				problem_read_finish = 1;
 			if (i->c == '-')
 			{
-				if (i - 1 >= problem.problem.begin() and i + 1 != problem.problem.end())
+				if ((i == problem.problem.begin() or i - 1 >= problem.problem.begin()) and i + 1 != problem.problem.end())
 				{
-					if (((i - 1)->c == '(' or (i - 1)->c == 's' or (i - 1)->c == 'c' or (i - 1)->c == 't') and (i + 1)->c == 'n')
+					if (i == problem.problem.begin() and (i + 1)->c == 'n')
+					{
+						i++;
+						i->n *= -1;
+						problem.problem.erase(i - 1);
+						break;
+					}
+					else if (((i - 1)->c == '(' or (i - 1)->c == 's' or (i - 1)->c == 'c' or (i - 1)->c == 't') and (i + 1)->c == 'n')
 					{
 						i++;
 						i->n *= -1;
