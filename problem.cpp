@@ -1,6 +1,7 @@
 #include "problem.h"
 #include <iostream>
 #include <cmath>
+#include <stack>
 using namespace std;
 
 inline bool isoperater(char c)
@@ -228,6 +229,34 @@ bool CheckProblem(Problem& problem)
 			}
 		}
 	}
+	//14：左右括号匹配
+	stack < vector<Item>::iterator > bracket;
+	for (auto i = problem.problem.begin(); i != problem.problem.end(); i++)
+	{
+		if (i->c != '(' and i->c != ')')
+			continue;
+		if (i->c == '(')
+		{
+			bracket.push(i);
+		}
+		if (i->c == ')')
+		{
+			if (bracket.empty())
+			{
+				i->error = 1, i->error_type = 14;
+				error_exist = 1;
+			}
+			else
+				bracket.pop();
+		}
+	}
+	while (!bracket.empty())
+	{
+		auto i = bracket.top();
+		bracket.pop();
+		i->error = 1, i->error_type = 14;
+		error_exist = 1;
+	}
 	return !error_exist;
 }
 
@@ -273,6 +302,9 @@ inline void PrintErrorInfo(int error_type)
 		break;
 	case 13:
 		cout << "右括号后不能是三角函数\n";
+		break;
+	case 14:
+		cout << "左右括号不匹配\n";
 		break;
 	default:
 		cout << "不是合法的输入\n";
