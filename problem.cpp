@@ -15,8 +15,28 @@ inline bool isoperater(char c)
 
 void CheckProblem(Problem& problem)
 {
-	//预处理操作数的负号
+	//删除表达式开头的多余空格
+	while (problem.problem[0].c == ' ')
+		problem.problem.erase(problem.problem.begin());
+	while (problem.problem[problem.problem.size() - 1].c == ' ')
+		problem.problem.pop_back();
 	bool problem_read_finish = 0;
+	//删除表达式中间的多余空格
+	while (!problem_read_finish)
+	{
+		for (auto i = problem.problem.begin(); i != problem.problem.end(); i++)
+		{
+			if (i + 1 == problem.problem.end())
+				problem_read_finish = 1;
+			if (i->c == ' ')
+			{
+				problem.problem.erase(i);
+				break;
+			}
+		}
+	}
+	//预处理操作数的负号
+	problem_read_finish = 0;
 	while (!problem_read_finish)
 	{
 		for (auto i = problem.problem.begin(); i != problem.problem.end(); i++)
@@ -45,11 +65,6 @@ void CheckProblem(Problem& problem)
 			}
 		}
 	}
-	//删除表达式开头的多余空格
-	while (problem.problem[0].c == ' ')
-		problem.problem.erase(problem.problem.begin());
-	while (problem.problem[problem.problem.size() - 1].c == ' ')
-		problem.problem.pop_back();
 	//1：表达式开头
 	auto problem_begin = problem.problem.begin();
 	if (problem_begin->c == 'n' or problem_begin->c == 's' or problem_begin->c == 'c' or problem_begin->c == 't' or problem_begin->c == '(')
