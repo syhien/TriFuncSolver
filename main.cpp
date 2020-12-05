@@ -11,6 +11,7 @@ using namespace std;
 
 int main()
 {
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 	bool exit = 0;
 	int view_problem;
 	vector <Problem> problem;
@@ -175,7 +176,7 @@ int main()
 				if (count_point > 1)
 				{
 					unknown_char = 1;
-					cout << "输入了过多的小数点\n";
+					cout << "输入了过多的小数点\n或许想要输入的是" << number << "?\n";
 				}
 			}
 			else if (c == '+' or c == '-' or c == '*' or c == '/' or c == '(' or c == ')' or c == ' ')
@@ -192,14 +193,20 @@ int main()
 			cout << "不正确的输入，请重新输入表达式\n";
 			continue;
 		}
-		bool legel_problem = CheckProblem(new_problem);
-		if (!legel_problem)
+		CheckProblem(new_problem);
+		if (new_problem.error)
 		{
 			cout << "表达式有误\n";
 			ProblemPrintWithError(new_problem);
 		}
 		else
 		{
+			SolveProblem(new_problem);
+			if (new_problem.error)
+			{
+				cout << "计算过程中出现了除以0！\n";
+				continue;
+			}
 			cout << new_problem << endl;
 			problem.push_back(new_problem);
 		}

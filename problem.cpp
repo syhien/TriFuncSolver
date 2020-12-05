@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cmath>
 #include <stack>
+#include <algorithm>
+#include <queue>
 using namespace std;
 
 inline bool isoperater(char c)
@@ -11,7 +13,7 @@ inline bool isoperater(char c)
 	return 0;
 }
 
-bool CheckProblem(Problem& problem)
+void CheckProblem(Problem& problem)
 {
 	//预处理操作数的负号
 	bool problem_read_finish = 0;
@@ -48,7 +50,6 @@ bool CheckProblem(Problem& problem)
 		problem.problem.erase(problem.problem.begin());
 	while (problem.problem[problem.problem.size() - 1].c == ' ')
 		problem.problem.pop_back();
-	bool error_exist = 0;
 	//1：表达式开头
 	auto problem_begin = problem.problem.begin();
 	if (problem_begin->c == 'n' or problem_begin->c == 's' or problem_begin->c == 'c' or problem_begin->c == 't' or problem_begin->c == '(')
@@ -58,7 +59,7 @@ bool CheckProblem(Problem& problem)
 	else
 	{
 		problem.problem[0].error = 1, problem.problem[0].error_type = 1;
-		error_exist = 1;
+		problem.error = 1;
 	}
 	//2：表达式结尾
 	auto problem_back = problem.problem.end() - 1;
@@ -69,7 +70,7 @@ bool CheckProblem(Problem& problem)
 	else
 	{
 		problem.problem[problem.problem.size() - 1].error = 1, problem.problem[problem.problem.size() - 1].error_type = 2;
-		error_exist = 1;
+		problem.error = 1;
 	}
 	//3：操作符后不能是右括号
 	for (auto i = problem.problem.begin(); i != problem.problem.end(); i++)
@@ -81,7 +82,7 @@ bool CheckProblem(Problem& problem)
 				if ((i + 1)->c == ')')
 				{
 					i->error = 1, i->error_type = 3;
-					error_exist = 1;
+					problem.error = 1;
 				}
 			}
 		}
@@ -96,7 +97,7 @@ bool CheckProblem(Problem& problem)
 				if (isoperater((i + 1)->c))
 				{
 					i->error = 1, i->error_type = 4;
-					error_exist = 1;
+					problem.error = 1;
 				}
 			}
 		}
@@ -111,7 +112,7 @@ bool CheckProblem(Problem& problem)
 				if ((i + 1)->c == ')')
 				{
 					i->error = 1, i->error_type = 5;
-					error_exist = 1;
+					problem.error = 1;
 				}
 			}
 		}
@@ -134,7 +135,7 @@ bool CheckProblem(Problem& problem)
 					{
 						(i - 1)->error = (i + 1)->error = 1;
 						(i - 1)->error_type = (i + 1)->error_type = 6;
-						error_exist = 1;
+						problem.error = 1;
 					}
 					else
 					{
@@ -153,7 +154,7 @@ bool CheckProblem(Problem& problem)
 			if ((i + 1) != problem.problem.end() and (i + 1)->c == '(')
 			{
 				i->error = 1, i->error_type = 7;
-				error_exist = 1;
+				problem.error = 1;
 			}
 		}
 	}
@@ -165,7 +166,7 @@ bool CheckProblem(Problem& problem)
 			if ((i + 1) != problem.problem.end() and ((i + 1)->c == 's' or (i + 1)->c == 'c' or (i + 1)->c == 't'))
 			{
 				i->error = 1, i->error_type = 8;
-				error_exist = 1;
+				problem.error = 1;
 			}
 		}
 	}
@@ -177,7 +178,7 @@ bool CheckProblem(Problem& problem)
 			if ((i + 1) != problem.problem.end() and (i + 1)->c == ')')
 			{
 				i->error = 1, i->error_type = 9;
-				error_exist = 1;
+				problem.error = 1;
 			}
 		}
 	}
@@ -189,7 +190,7 @@ bool CheckProblem(Problem& problem)
 			if ((i + 1) != problem.problem.end() and isoperater((i + 1)->c))
 			{
 				i->error = 1, i->error_type = 10;
-				error_exist = 1;
+				problem.error = 1;
 			}
 		}
 	}
@@ -201,7 +202,7 @@ bool CheckProblem(Problem& problem)
 			if ((i + 1) != problem.problem.end() and (i + 1)->c == '(')
 			{
 				i->error = 1, i->error_type = 11;
-				error_exist = 1;
+				problem.error = 1;
 			}
 		}
 	}
@@ -213,7 +214,7 @@ bool CheckProblem(Problem& problem)
 			if ((i + 1) != problem.problem.end() and (i + 1)->c == 'n')
 			{
 				i->error = 1, i->error_type = 12;
-				error_exist = 1;
+				problem.error = 1;
 			}
 		}
 	}
@@ -225,7 +226,7 @@ bool CheckProblem(Problem& problem)
 			if ((i + 1) != problem.problem.end() and ((i + 1)->c == 's' or (i + 1)->c == 'c' or (i + 1)->c == 't'))
 			{
 				i->error = 1, i->error_type = 13;
-				error_exist = 1;
+				problem.error = 1;
 			}
 		}
 	}
@@ -244,7 +245,7 @@ bool CheckProblem(Problem& problem)
 			if (bracket.empty())
 			{
 				i->error = 1, i->error_type = 14;
-				error_exist = 1;
+				problem.error = 1;
 			}
 			else
 				bracket.pop();
@@ -255,9 +256,8 @@ bool CheckProblem(Problem& problem)
 		auto i = bracket.top();
 		bracket.pop();
 		i->error = 1, i->error_type = 14;
-		error_exist = 1;
+		problem.error = 1;
 	}
-	return !error_exist;
 }
 
 inline void PrintErrorInfo(int error_type)
@@ -371,4 +371,90 @@ void ProblemPrintWithError(Problem problem)
 			PrintErrorInfo(i.error_type);
 		}
 	}
+}
+
+void SolveProblem(Problem& problem)
+{
+	int in_priority[150], out_priority[150];
+	fill(in_priority, in_priority + 150, 0);
+	fill(out_priority, out_priority + 150, 0);
+	in_priority['('] = 1, in_priority['s'] = in_priority['c'] = in_priority['t'] = 7, in_priority['*'] = in_priority['/'] = 5, in_priority['+'] = in_priority['-'] = 3;
+	out_priority['('] = 9, out_priority['s'] = out_priority['c'] = out_priority['t'] = 8, out_priority['*'] = out_priority['/'] = 6, out_priority['+'] = out_priority['-'] = 4, out_priority[')'] = 1;
+	stack<char> mid_to_back;
+	queue<Item> back;
+	stack<double> solve_number;
+	for (auto i : problem.problem)
+	{
+		if (i.c == 'n')
+			back.push(i);
+		else
+		{
+			if (i.c == ')')
+			{
+				while (mid_to_back.top() != '(')
+					back.push({ mid_to_back.top(),0,0,0 }), mid_to_back.pop();
+				mid_to_back.pop();
+			}
+			else
+			{
+				while (!mid_to_back.empty() and in_priority[mid_to_back.top()] >= out_priority[i.c])
+					back.push({ mid_to_back.top(),0,0,0 }), mid_to_back.pop();
+				mid_to_back.push(i.c);
+			}
+		}
+	}
+	while (!mid_to_back.empty())
+		back.push({ mid_to_back.top(),0,0,0 }), mid_to_back.pop();
+	while (!back.empty())
+	{
+		double x, y;
+		switch (back.front().c)
+		{
+		case 'n':
+			solve_number.push(back.front().n);
+			break;
+		case '+':
+			y = solve_number.top(), solve_number.pop();
+			x = solve_number.top(), solve_number.pop();
+			solve_number.push(x + y);
+			break;
+		case '-':
+			y = solve_number.top(), solve_number.pop();
+			x = solve_number.top(), solve_number.pop();
+			solve_number.push(x - y);
+			break;
+		case '*':
+			y = solve_number.top(), solve_number.pop();
+			x = solve_number.top(), solve_number.pop();
+			solve_number.push(x * y);
+			break;
+		case '/':
+			y = solve_number.top(), solve_number.pop();
+			x = solve_number.top(), solve_number.pop();
+			if (y == 0)
+			{
+				problem.error = 1;
+				return;
+			}
+			else
+				solve_number.push(x / y);
+			break;
+		case 's':
+			y = solve_number.top(), solve_number.pop();
+			solve_number.push(sin(y));
+			break;
+		case 'c':
+			y = solve_number.top(), solve_number.pop();
+			solve_number.push(cos(y));
+			break;
+		case 't':
+			y = solve_number.top(), solve_number.pop();
+			solve_number.push(tan(y));
+			break;
+		default:
+			break;
+		}
+		back.pop();
+	}
+	problem.answer = solve_number.top();
 }

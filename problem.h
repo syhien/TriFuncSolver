@@ -15,38 +15,21 @@ struct Problem
 {
 	string problem_string;
 	vector <Item> problem;
+	bool error;
 	double answer;
+	Problem()
+	{
+		error = 0;
+		answer = 0;
+	}
 	friend ostream& operator<<(ostream& out, const Problem& x)
 	{
-		for (auto& i : x.problem)
-			switch (i.c)
-			{
-			case 'n':
-				if (i.n == 3.1415926)
-					out << "pi";
-				else
-					out << i.n;
-				break;
-			case 's':
-				out << "sin";
-				break;
-			case 'c':
-				out << "cos";
-				break;
-			case 't':
-				out << "tan";
-				break;
-			default:
-				out << i.c;
-				break;
-			}
-		out << "=" << fixed << setprecision(8) << x.answer;
-		out << defaultfloat;
+		out << x.problem_string;
+		out << "=" << fixed << setprecision(8) << x.answer, out << defaultfloat;;
 		return out;
 	}
-	bool error;
 };
 
-bool CheckProblem(Problem& problem);
-bool SolveProblem(Problem& problem);
+void CheckProblem(Problem& problem);
+void SolveProblem(Problem& problem);
 void ProblemPrintWithError(Problem problem);
