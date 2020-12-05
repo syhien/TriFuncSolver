@@ -48,6 +48,5 @@ struct Problem
 };
 
 bool CheckProblem(Problem& problem);
-double SolveProblem(Problem problem);
-void ViewProblem(Problem problem);
+bool SolveProblem(Problem& problem);
 void ProblemPrintWithError(Problem problem);

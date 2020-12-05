@@ -201,6 +201,7 @@ int main()
 		else
 		{
 			cout << new_problem << endl;
+			problem.push_back(new_problem);
 		}
 	}
 	return 0;
