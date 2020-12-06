@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include <iomanip>
-#include <Windows.h>
 using namespace std;
 struct Item
 {

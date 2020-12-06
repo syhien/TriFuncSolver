@@ -7,6 +7,7 @@
 #include <cstring>
 #include "problem.h"
 #include <string>
+#include <Windows.h>
 using namespace std;
 
 int main()
