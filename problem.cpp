@@ -400,8 +400,8 @@ void SolveProblem(Problem& problem)
 	int in_priority[150], out_priority[150];
 	fill(in_priority, in_priority + 150, 0);
 	fill(out_priority, out_priority + 150, 0);
-	in_priority['('] = 1, in_priority['s'] = in_priority['c'] = in_priority['t'] = 7, in_priority['*'] = in_priority['/'] = 5, in_priority['+'] = in_priority['-'] = 3;
-	out_priority['('] = 9, out_priority['s'] = out_priority['c'] = out_priority['t'] = 8, out_priority['*'] = out_priority['/'] = 6, out_priority['+'] = out_priority['-'] = 4, out_priority[')'] = 1;
+	in_priority['('] = 1, in_priority['s'] = in_priority['c'] = in_priority['t'] = 8, in_priority['*'] = in_priority['/'] = 6, in_priority['+'] = in_priority['-'] = 4;
+	out_priority['('] = 9, out_priority['s'] = out_priority['c'] = out_priority['t'] = 7, out_priority['*'] = out_priority['/'] = 5, out_priority['+'] = out_priority['-'] = 3, out_priority[')'] = 1;
 	stack<char> mid_to_back;
 	queue<Item> back;
 	stack<double> solve_number;
