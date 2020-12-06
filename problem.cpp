@@ -51,7 +51,7 @@ void CheckProblem(Problem& problem)
 			}
 		}
 	}
-	//预处理操作数的负号
+	//负号前为左括号或三角函数时前补0
 	problem_read_finish = 0;
 	while (!problem_read_finish)
 	{
@@ -61,22 +61,10 @@ void CheckProblem(Problem& problem)
 				problem_read_finish = 1;
 			if (i->c == '-')
 			{
-				if ((i == problem.problem.begin() or i - 1 >= problem.problem.begin()) and i + 1 != problem.problem.end())
+				if (i == problem.problem.begin() or (i - 1)->c == '(' or (i - 1)->c == 's' or (i - 1)->c == 'c' or (i - 1)->c == 't')
 				{
-					if (i == problem.problem.begin() and (i + 1)->c == 'n')
-					{
-						i++;
-						i->n *= -1;
-						problem.problem.erase(i - 1);
-						break;
-					}
-					else if (((i - 1)->c == '(' or (i - 1)->c == 's' or (i - 1)->c == 'c' or (i - 1)->c == 't') and (i + 1)->c == 'n')
-					{
-						i++;
-						i->n *= -1;
-						problem.problem.erase(i - 1);
-						break;
-					}
+					problem.problem.insert(i, { 'n',0,0,0 });
+					break;
 				}
 			}
 		}
